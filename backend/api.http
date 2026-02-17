@@ -1,0 +1,12 @@
+### Criar Produto
+POST http://localhost:8080/api/products
+Content-Type: application/json
+
+{
+  "name": "Engrenagem de Aço",
+  "sku": "ENG-001",
+  "price": 150.00
+}
+
+### Listar Produtos
+GET http://localhost:8080/api/products

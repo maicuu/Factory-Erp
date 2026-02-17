@@ -1,0 +1,8 @@
+{
+"folders": [
+{ "path": "backend", "name": "BACKEND (Quark)" },
+{ "path": "frontend", "name": "FRONTEND (React + Redux)" },
+{ "path": ".", "name": "RAIZ DO PROJETO" }
+],
+"settings": {}
+}
