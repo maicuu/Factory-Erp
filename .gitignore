@@ -1,0 +1,22 @@
+# Java/Quarkus
+target/
+.quarkus/
+*.class
+*.save
+.factorypath
+.settings/
+.project
+.classpath
+
+# Node/React
+node_modules/
+dist/
+dist-ssr/
+*.local
+.eslintcache
+
+# IDEs e Sistema
+.idea/
+.vscode/
+Thumbs.db
+.DS_Store
