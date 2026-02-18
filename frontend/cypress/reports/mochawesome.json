@@ -1,0 +1,124 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 2,
+    "passes": 2,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-02-18T19:58:14.644Z",
+    "end": "2026-02-18T19:58:17.211Z",
+    "duration": 2567,
+    "testsRegistered": 2,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "562a7ed9-a372-4eb1-b644-6ad56bde951d",
+      "title": "",
+      "fullFile": "cypress\\e2e\\dashboard.cy.js",
+      "file": "cypress\\e2e\\dashboard.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "33f890b6-d0df-4170-abd4-5e55fe802787",
+          "title": "Fluxo Operacional - Factory ERP",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Deve validar os indicadores de lucro no Header do Dashboard",
+              "fullTitle": "Fluxo Operacional - Factory ERP Deve validar os indicadores de lucro no Header do Dashboard",
+              "timedOut": null,
+              "duration": 1247,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Mudamos o seletor para pegar a DIV com rounded-3xl\n// Isso ignora o <header> do topo do site e foca no Card de Lucro\ncy.get('div.bg-slate-900.rounded-3xl').first().within(() => {\n  // Usamos apenas 'Lucro' para evitar erros de quebra de linha do HTML\n  cy.contains(/Lucro/i).should('be.visible');\n  // Valida que existe um valor em Reais\n  cy.contains(/R\\$/).should('be.visible');\n  // Valida a margem\n  cy.contains(/Margem/i).should('be.visible');\n});",
+              "err": {},
+              "uuid": "ad1af678-69ce-443e-8842-cefe486bf148",
+              "parentUUID": "33f890b6-d0df-4170-abd4-5e55fe802787",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Deve interagir com o fluxo de produção",
+              "fullTitle": "Fluxo Operacional - Factory ERP Deve interagir com o fluxo de produção",
+              "timedOut": null,
+              "duration": 1262,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Busca os botões dentro do grid de Capacidade Técnica\n// Usamos o texto exato do seu código: 'Produzir Item' ou 'Ver Pendências'\ncy.get('button').contains(/Produzir|Pendências/i).first().click({\n  force: true\n});\n// Aguarda o modal do SweetAlert aparecer\ncy.get('.swal2-popup', {\n  timeout: 8000\n}).should('be.visible');\n// Lógica para preencher a quantidade apenas se o campo existir (Fluxo de Produção)\ncy.get('body').then($body => {\n  if ($body.find('#swal-input-qty').length > 0) {\n    cy.get('#swal-input-qty').clear().type('1');\n    // Clica no botão de confirmação que você estilizou\n    cy.contains('Confirmar Produção').click();\n  }\n});\n// Fecha o modal de sucesso ou aviso\ncy.contains(/Cancelar|Entendi|OK/i).click({\n  force: true\n});",
+              "err": {},
+              "uuid": "58d86269-38fa-4013-878c-f0de1f0d5529",
+              "parentUUID": "33f890b6-d0df-4170-abd4-5e55fe802787",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "ad1af678-69ce-443e-8842-cefe486bf148",
+            "58d86269-38fa-4013-878c-f0de1f0d5529"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 2509,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.3.2"
+    }
+  }
+}

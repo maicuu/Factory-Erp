@@ -1,0 +1,105 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-02-18T19:58:18.991Z",
+    "end": "2026-02-18T19:58:21.107Z",
+    "duration": 2116,
+    "testsRegistered": 1,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "45d58152-83dd-474f-bf6c-5d039cce61a9",
+      "title": "",
+      "fullFile": "cypress\\e2e\\fluxo-erro.cy.js",
+      "file": "cypress\\e2e\\fluxo-erro.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "72441223-5ab1-477f-be13-631ef573df6e",
+          "title": "Tratamento de Erros - Estoque Insuficiente",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Deve exibir a lista de insumos faltantes quando a produção falha",
+              "fullTitle": "Tratamento de Erros - Estoque Insuficiente Deve exibir a lista de insumos faltantes quando a produção falha",
+              "timedOut": null,
+              "duration": 2076,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// 5. Busca o botão \"Produzir Item\" ou \"Ver Pendências\"\n// No seu código: cap.maxPossible > 0 ? 'Produzir Item' : 'Ver Pendências'\ncy.get('button').contains(/Produzir|Pendências/i).first().click({\n  force: true\n});\n// 6. Se o modal de quantidade abrir (SweetAlert)\ncy.get('body').then($body => {\n  if ($body.find('#swal-input-qty').length > 0) {\n    cy.get('#swal-input-qty').clear().type('10');\n    // Clica no botão \"Confirmar Produção\" que você definiu no Swal\n    cy.contains('Confirmar Produção').click();\n  }\n});\n// 7. Espera a resposta de erro\ncy.wait('@postProducaoErro');\n// 8. Valida a lista formatada no SweetAlert\ncy.get('.swal2-popup').within(() => {\n  // O título que você definiu no catch: 'Estoque Insuficiente'\n  cy.contains('Estoque Insuficiente').should('be.visible');\n  // Valida se os itens que mockamos aparecem na lista <li>\n  cy.get('ul li').should('have.length.at.least', 1);\n  cy.contains('Chapa de Aço').should('be.visible');\n  cy.contains('Motor Elétrico').should('be.visible');\n});\ncy.contains('OK').click();",
+              "err": {},
+              "uuid": "634be220-9883-423d-9418-c1abf5c7398c",
+              "parentUUID": "72441223-5ab1-477f-be13-631ef573df6e",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "634be220-9883-423d-9418-c1abf5c7398c"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 2076,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.3.2"
+    }
+  }
+}

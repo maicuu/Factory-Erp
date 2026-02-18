@@ -1,0 +1,162 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 4,
+    "passes": 4,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-02-18T19:58:26.549Z",
+    "end": "2026-02-18T19:58:29.275Z",
+    "duration": 2726,
+    "testsRegistered": 4,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "6d2af739-ae68-4fb6-969e-c4d026c58c4f",
+      "title": "",
+      "fullFile": "cypress\\e2e\\responsividade.cy.js",
+      "file": "cypress\\e2e\\responsividade.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "d2b8ddf9-9243-402f-aaa6-2d7d992801ef",
+          "title": "Responsividade - Factory ERP",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Deve renderizar corretamente no iPhone XR",
+              "fullTitle": "Responsividade - Factory ERP Deve renderizar corretamente no iPhone XR",
+              "timedOut": null,
+              "duration": 1064,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Ajusta o tamanho da tela\ncy.viewport(viewport.width, viewport.height);\n// 1. O card de Lucro deve estar visível, independente do tamanho\ncy.get('div.bg-slate-900.rounded-3xl').should('be.visible');\n// 2. No Mobile (iPhone), o Header do dashboard deve empilhar (flex-col)\nif (viewport.width < 768) {\n  cy.get('div.bg-slate-900.rounded-3xl > div').should('have.class', 'flex-col');\n}\n// 3. O grid de sugestões deve ser visível (mesmo que mude a quantidade de colunas)\ncy.contains(/Otimização de/i).should('be.visible');\n// 4. Os botões de ação devem continuar clicáveis\ncy.get('button').contains(/Produzir|Pendências/i).first().should('be.visible').and('not.be.disabled');",
+              "err": {},
+              "uuid": "49ffe8e8-0342-4a92-b2cc-464f751f898f",
+              "parentUUID": "d2b8ddf9-9243-402f-aaa6-2d7d992801ef",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Deve renderizar corretamente no iPad (geração 2)",
+              "fullTitle": "Responsividade - Factory ERP Deve renderizar corretamente no iPad (geração 2)",
+              "timedOut": null,
+              "duration": 670,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Ajusta o tamanho da tela\ncy.viewport(viewport.width, viewport.height);\n// 1. O card de Lucro deve estar visível, independente do tamanho\ncy.get('div.bg-slate-900.rounded-3xl').should('be.visible');\n// 2. No Mobile (iPhone), o Header do dashboard deve empilhar (flex-col)\nif (viewport.width < 768) {\n  cy.get('div.bg-slate-900.rounded-3xl > div').should('have.class', 'flex-col');\n}\n// 3. O grid de sugestões deve ser visível (mesmo que mude a quantidade de colunas)\ncy.contains(/Otimização de/i).should('be.visible');\n// 4. Os botões de ação devem continuar clicáveis\ncy.get('button').contains(/Produzir|Pendências/i).first().should('be.visible').and('not.be.disabled');",
+              "err": {},
+              "uuid": "72065aad-949f-4949-9707-76f9b1bba579",
+              "parentUUID": "d2b8ddf9-9243-402f-aaa6-2d7d992801ef",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Deve renderizar corretamente no Macbook 13",
+              "fullTitle": "Responsividade - Factory ERP Deve renderizar corretamente no Macbook 13",
+              "timedOut": null,
+              "duration": 415,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Ajusta o tamanho da tela\ncy.viewport(viewport.width, viewport.height);\n// 1. O card de Lucro deve estar visível, independente do tamanho\ncy.get('div.bg-slate-900.rounded-3xl').should('be.visible');\n// 2. No Mobile (iPhone), o Header do dashboard deve empilhar (flex-col)\nif (viewport.width < 768) {\n  cy.get('div.bg-slate-900.rounded-3xl > div').should('have.class', 'flex-col');\n}\n// 3. O grid de sugestões deve ser visível (mesmo que mude a quantidade de colunas)\ncy.contains(/Otimização de/i).should('be.visible');\n// 4. Os botões de ação devem continuar clicáveis\ncy.get('button').contains(/Produzir|Pendências/i).first().should('be.visible').and('not.be.disabled');",
+              "err": {},
+              "uuid": "86d2982e-5e1b-43ca-9f4d-14f2930ab6e5",
+              "parentUUID": "d2b8ddf9-9243-402f-aaa6-2d7d992801ef",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Deve mostrar/esconder o menu lateral se houver comportamento de hambúrguer",
+              "fullTitle": "Responsividade - Factory ERP Deve mostrar/esconder o menu lateral se houver comportamento de hambúrguer",
+              "timedOut": null,
+              "duration": 415,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.viewport('iphone-xr');\n// Se você tiver um menu lateral que vira hambúrguer no mobile:\n// cy.get('button[aria-label=\"Menu\"]').click();\n// cy.get('nav').should('be.visible');\n// No seu caso, validamos se o texto principal ainda cabe na tela sem overflow\ncy.get('body').should('not.have.css', 'overflow-x', 'scroll');",
+              "err": {},
+              "uuid": "4e7628d8-7e47-4af3-ad5f-4e894622674c",
+              "parentUUID": "d2b8ddf9-9243-402f-aaa6-2d7d992801ef",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "49ffe8e8-0342-4a92-b2cc-464f751f898f",
+            "72065aad-949f-4949-9707-76f9b1bba579",
+            "86d2982e-5e1b-43ca-9f4d-14f2930ab6e5",
+            "4e7628d8-7e47-4af3-ad5f-4e894622674c"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 2564,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.3.2"
+    }
+  }
+}

@@ -1,0 +1,124 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 2,
+    "passes": 2,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-02-18T19:58:22.763Z",
+    "end": "2026-02-18T19:58:24.533Z",
+    "duration": 1770,
+    "testsRegistered": 2,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "be801c8b-dc67-41b8-9ed0-36fa7ca27d04",
+      "title": "",
+      "fullFile": "cypress\\e2e\\network-failure.cy.js",
+      "file": "cypress\\e2e\\network-failure.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "73d924b7-96c3-4736-8663-5c278aad0f54",
+          "title": "Resiliência - Falhas de Conexão e Erros de Servidor",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Deve lidar com erro 500 na carga inicial dos dados",
+              "fullTitle": "Resiliência - Falhas de Conexão e Erros de Servidor Deve lidar com erro 500 na carga inicial dos dados",
+              "timedOut": null,
+              "duration": 1092,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// 1. Simula erro interno do servidor\ncy.intercept('GET', '**/api/products/availability', {\n  statusCode: 500,\n  body: {\n    error: \"Internal Server Error\"\n  }\n}).as('getAvailabilityError');\ncy.visit('/');\ncy.get('button, a').contains(/Produção/i).click({\n  force: true\n});\n// 2. Aguarda a falha\ncy.wait('@getAvailabilityError');\n// 3. O loader deve sumir (garante que o app não travou no loading)\ncy.contains(/Sincronizando/i).should('not.exist');\n// 4. Valida que a seção existe, mas está vazia (comportamento atual do seu código)\ncy.get('h3').contains('Capacidade Técnica').should('be.visible');\n// Verifica se a lista de cards está vazia\ncy.get('div.grid').last().children().should('have.length', 0);",
+              "err": {},
+              "uuid": "fa45ae04-aa82-4c63-9fbd-73e786d2d27a",
+              "parentUUID": "73d924b7-96c3-4736-8663-5c278aad0f54",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Deve lidar com queda total de rede (Network Failure)",
+              "fullTitle": "Resiliência - Falhas de Conexão e Erros de Servidor Deve lidar com queda total de rede (Network Failure)",
+              "timedOut": null,
+              "duration": 601,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Simula que a internet caiu ou o servidor está inacessível\ncy.intercept('GET', '**/api/products/optimized-suggestion', {\n  forceNetworkError: true\n}).as('networkError');\ncy.visit('/');\ncy.get('button, a').contains(/Produção/i).click({\n  force: true\n});\ncy.wait('@networkError');\n// Verifica se o dashboard exibe valores zerados (estado inicial do useState)\n// Em vez de quebrar a tela com um erro de undefined\ncy.contains('R$ 0,00').should('be.visible');",
+              "err": {},
+              "uuid": "c5556efd-f37e-4c45-9a66-4921982b0170",
+              "parentUUID": "73d924b7-96c3-4736-8663-5c278aad0f54",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "fa45ae04-aa82-4c63-9fbd-73e786d2d27a",
+            "c5556efd-f37e-4c45-9a66-4921982b0170"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 1693,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.3.2"
+    }
+  }
+}

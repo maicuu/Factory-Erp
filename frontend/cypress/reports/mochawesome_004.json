@@ -1,0 +1,105 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-02-18T19:58:31.195Z",
+    "end": "2026-02-18T19:58:32.550Z",
+    "duration": 1355,
+    "testsRegistered": 1,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "1c433bfd-38ac-49db-9965-b4828fe6b6e7",
+      "title": "",
+      "fullFile": "cypress\\e2e\\stress-test.cy.js",
+      "file": "cypress\\e2e\\stress-test.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "4436c322-ed56-4a38-ac1c-9520844aea58",
+          "title": "Teste de Stress - Carga de Dados Massiva",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Deve manter a performance e layout com 50 itens na lista",
+              "fullTitle": "Teste de Stress - Carga de Dados Massiva Deve manter a performance e layout com 50 itens na lista",
+              "timedOut": null,
+              "duration": 1294,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// 1. Aguarda a carga massiva\ncy.wait('@getLargeData');\n// 2. Valida se os 50 cards de sugestão apareceram\n// Usamos o seletor da borda lateral emerald que está no seu .map\ncy.get('.border-l-emerald-500', {\n  timeout: 10000\n}).should('have.length', 50);\n// 3. Verifica se o scroll funciona\ncy.scrollTo('bottom');\n// 4. Garante que o último item está lá embaixo\ncy.contains('Produto Hiper-Otimizado 50').should('be.visible');\n// 5. O Header deve continuar firme no topo (mesmo com scroll, se for fixo)\n// ou pelo menos existir no DOM\ncy.get('div.bg-slate-900.rounded-3xl').should('exist');",
+              "err": {},
+              "uuid": "83c2f8ad-2099-454e-bb31-413f9d81fbdd",
+              "parentUUID": "4436c322-ed56-4a38-ac1c-9520844aea58",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "83c2f8ad-2099-454e-bb31-413f9d81fbdd"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 1294,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.3.2"
+    }
+  }
+}

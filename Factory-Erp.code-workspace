@@ -4,5 +4,8 @@
 { "path": "frontend", "name": "FRONTEND (React + Redux)" },
 { "path": ".", "name": "RAIZ DO PROJETO" }
 ],
-"settings": {}
+"settings": {
+    "git.ignoreLimitWarning": true,
+    "liveServer.settings.multiRootWorkspaceName": "FRONTEND (React + Redux)"
+}
 }

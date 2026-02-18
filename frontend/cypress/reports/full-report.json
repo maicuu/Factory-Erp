@@ -1,0 +1,432 @@
+{
+  "stats": {
+    "suites": 5,
+    "tests": 10,
+    "passes": 10,
+    "pending": 0,
+    "failures": 0,
+    "testsRegistered": 10,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false,
+    "start": "2026-02-18T19:58:14.644Z",
+    "end": "2026-02-18T19:58:32.550Z",
+    "duration": 17906
+  },
+  "results": [
+    {
+      "uuid": "45d58152-83dd-474f-bf6c-5d039cce61a9",
+      "title": "",
+      "fullFile": "cypress\\e2e\\fluxo-erro.cy.js",
+      "file": "cypress\\e2e\\fluxo-erro.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "72441223-5ab1-477f-be13-631ef573df6e",
+          "title": "Tratamento de Erros - Estoque Insuficiente",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Deve exibir a lista de insumos faltantes quando a produção falha",
+              "fullTitle": "Tratamento de Erros - Estoque Insuficiente Deve exibir a lista de insumos faltantes quando a produção falha",
+              "timedOut": null,
+              "duration": 2076,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// 5. Busca o botão \"Produzir Item\" ou \"Ver Pendências\"\n// No seu código: cap.maxPossible > 0 ? 'Produzir Item' : 'Ver Pendências'\ncy.get('button').contains(/Produzir|Pendências/i).first().click({\n  force: true\n});\n// 6. Se o modal de quantidade abrir (SweetAlert)\ncy.get('body').then($body => {\n  if ($body.find('#swal-input-qty').length > 0) {\n    cy.get('#swal-input-qty').clear().type('10');\n    // Clica no botão \"Confirmar Produção\" que você definiu no Swal\n    cy.contains('Confirmar Produção').click();\n  }\n});\n// 7. Espera a resposta de erro\ncy.wait('@postProducaoErro');\n// 8. Valida a lista formatada no SweetAlert\ncy.get('.swal2-popup').within(() => {\n  // O título que você definiu no catch: 'Estoque Insuficiente'\n  cy.contains('Estoque Insuficiente').should('be.visible');\n  // Valida se os itens que mockamos aparecem na lista <li>\n  cy.get('ul li').should('have.length.at.least', 1);\n  cy.contains('Chapa de Aço').should('be.visible');\n  cy.contains('Motor Elétrico').should('be.visible');\n});\ncy.contains('OK').click();",
+              "err": {},
+              "uuid": "634be220-9883-423d-9418-c1abf5c7398c",
+              "parentUUID": "72441223-5ab1-477f-be13-631ef573df6e",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "634be220-9883-423d-9418-c1abf5c7398c"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 2076,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    },
+    {
+      "uuid": "be801c8b-dc67-41b8-9ed0-36fa7ca27d04",
+      "title": "",
+      "fullFile": "cypress\\e2e\\network-failure.cy.js",
+      "file": "cypress\\e2e\\network-failure.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "73d924b7-96c3-4736-8663-5c278aad0f54",
+          "title": "Resiliência - Falhas de Conexão e Erros de Servidor",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Deve lidar com erro 500 na carga inicial dos dados",
+              "fullTitle": "Resiliência - Falhas de Conexão e Erros de Servidor Deve lidar com erro 500 na carga inicial dos dados",
+              "timedOut": null,
+              "duration": 1092,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// 1. Simula erro interno do servidor\ncy.intercept('GET', '**/api/products/availability', {\n  statusCode: 500,\n  body: {\n    error: \"Internal Server Error\"\n  }\n}).as('getAvailabilityError');\ncy.visit('/');\ncy.get('button, a').contains(/Produção/i).click({\n  force: true\n});\n// 2. Aguarda a falha\ncy.wait('@getAvailabilityError');\n// 3. O loader deve sumir (garante que o app não travou no loading)\ncy.contains(/Sincronizando/i).should('not.exist');\n// 4. Valida que a seção existe, mas está vazia (comportamento atual do seu código)\ncy.get('h3').contains('Capacidade Técnica').should('be.visible');\n// Verifica se a lista de cards está vazia\ncy.get('div.grid').last().children().should('have.length', 0);",
+              "err": {},
+              "uuid": "fa45ae04-aa82-4c63-9fbd-73e786d2d27a",
+              "parentUUID": "73d924b7-96c3-4736-8663-5c278aad0f54",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Deve lidar com queda total de rede (Network Failure)",
+              "fullTitle": "Resiliência - Falhas de Conexão e Erros de Servidor Deve lidar com queda total de rede (Network Failure)",
+              "timedOut": null,
+              "duration": 601,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Simula que a internet caiu ou o servidor está inacessível\ncy.intercept('GET', '**/api/products/optimized-suggestion', {\n  forceNetworkError: true\n}).as('networkError');\ncy.visit('/');\ncy.get('button, a').contains(/Produção/i).click({\n  force: true\n});\ncy.wait('@networkError');\n// Verifica se o dashboard exibe valores zerados (estado inicial do useState)\n// Em vez de quebrar a tela com um erro de undefined\ncy.contains('R$ 0,00').should('be.visible');",
+              "err": {},
+              "uuid": "c5556efd-f37e-4c45-9a66-4921982b0170",
+              "parentUUID": "73d924b7-96c3-4736-8663-5c278aad0f54",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "fa45ae04-aa82-4c63-9fbd-73e786d2d27a",
+            "c5556efd-f37e-4c45-9a66-4921982b0170"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 1693,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    },
+    {
+      "uuid": "6d2af739-ae68-4fb6-969e-c4d026c58c4f",
+      "title": "",
+      "fullFile": "cypress\\e2e\\responsividade.cy.js",
+      "file": "cypress\\e2e\\responsividade.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "d2b8ddf9-9243-402f-aaa6-2d7d992801ef",
+          "title": "Responsividade - Factory ERP",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Deve renderizar corretamente no iPhone XR",
+              "fullTitle": "Responsividade - Factory ERP Deve renderizar corretamente no iPhone XR",
+              "timedOut": null,
+              "duration": 1064,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Ajusta o tamanho da tela\ncy.viewport(viewport.width, viewport.height);\n// 1. O card de Lucro deve estar visível, independente do tamanho\ncy.get('div.bg-slate-900.rounded-3xl').should('be.visible');\n// 2. No Mobile (iPhone), o Header do dashboard deve empilhar (flex-col)\nif (viewport.width < 768) {\n  cy.get('div.bg-slate-900.rounded-3xl > div').should('have.class', 'flex-col');\n}\n// 3. O grid de sugestões deve ser visível (mesmo que mude a quantidade de colunas)\ncy.contains(/Otimização de/i).should('be.visible');\n// 4. Os botões de ação devem continuar clicáveis\ncy.get('button').contains(/Produzir|Pendências/i).first().should('be.visible').and('not.be.disabled');",
+              "err": {},
+              "uuid": "49ffe8e8-0342-4a92-b2cc-464f751f898f",
+              "parentUUID": "d2b8ddf9-9243-402f-aaa6-2d7d992801ef",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Deve renderizar corretamente no iPad (geração 2)",
+              "fullTitle": "Responsividade - Factory ERP Deve renderizar corretamente no iPad (geração 2)",
+              "timedOut": null,
+              "duration": 670,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Ajusta o tamanho da tela\ncy.viewport(viewport.width, viewport.height);\n// 1. O card de Lucro deve estar visível, independente do tamanho\ncy.get('div.bg-slate-900.rounded-3xl').should('be.visible');\n// 2. No Mobile (iPhone), o Header do dashboard deve empilhar (flex-col)\nif (viewport.width < 768) {\n  cy.get('div.bg-slate-900.rounded-3xl > div').should('have.class', 'flex-col');\n}\n// 3. O grid de sugestões deve ser visível (mesmo que mude a quantidade de colunas)\ncy.contains(/Otimização de/i).should('be.visible');\n// 4. Os botões de ação devem continuar clicáveis\ncy.get('button').contains(/Produzir|Pendências/i).first().should('be.visible').and('not.be.disabled');",
+              "err": {},
+              "uuid": "72065aad-949f-4949-9707-76f9b1bba579",
+              "parentUUID": "d2b8ddf9-9243-402f-aaa6-2d7d992801ef",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Deve renderizar corretamente no Macbook 13",
+              "fullTitle": "Responsividade - Factory ERP Deve renderizar corretamente no Macbook 13",
+              "timedOut": null,
+              "duration": 415,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Ajusta o tamanho da tela\ncy.viewport(viewport.width, viewport.height);\n// 1. O card de Lucro deve estar visível, independente do tamanho\ncy.get('div.bg-slate-900.rounded-3xl').should('be.visible');\n// 2. No Mobile (iPhone), o Header do dashboard deve empilhar (flex-col)\nif (viewport.width < 768) {\n  cy.get('div.bg-slate-900.rounded-3xl > div').should('have.class', 'flex-col');\n}\n// 3. O grid de sugestões deve ser visível (mesmo que mude a quantidade de colunas)\ncy.contains(/Otimização de/i).should('be.visible');\n// 4. Os botões de ação devem continuar clicáveis\ncy.get('button').contains(/Produzir|Pendências/i).first().should('be.visible').and('not.be.disabled');",
+              "err": {},
+              "uuid": "86d2982e-5e1b-43ca-9f4d-14f2930ab6e5",
+              "parentUUID": "d2b8ddf9-9243-402f-aaa6-2d7d992801ef",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Deve mostrar/esconder o menu lateral se houver comportamento de hambúrguer",
+              "fullTitle": "Responsividade - Factory ERP Deve mostrar/esconder o menu lateral se houver comportamento de hambúrguer",
+              "timedOut": null,
+              "duration": 415,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.viewport('iphone-xr');\n// Se você tiver um menu lateral que vira hambúrguer no mobile:\n// cy.get('button[aria-label=\"Menu\"]').click();\n// cy.get('nav').should('be.visible');\n// No seu caso, validamos se o texto principal ainda cabe na tela sem overflow\ncy.get('body').should('not.have.css', 'overflow-x', 'scroll');",
+              "err": {},
+              "uuid": "4e7628d8-7e47-4af3-ad5f-4e894622674c",
+              "parentUUID": "d2b8ddf9-9243-402f-aaa6-2d7d992801ef",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "49ffe8e8-0342-4a92-b2cc-464f751f898f",
+            "72065aad-949f-4949-9707-76f9b1bba579",
+            "86d2982e-5e1b-43ca-9f4d-14f2930ab6e5",
+            "4e7628d8-7e47-4af3-ad5f-4e894622674c"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 2564,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    },
+    {
+      "uuid": "1c433bfd-38ac-49db-9965-b4828fe6b6e7",
+      "title": "",
+      "fullFile": "cypress\\e2e\\stress-test.cy.js",
+      "file": "cypress\\e2e\\stress-test.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "4436c322-ed56-4a38-ac1c-9520844aea58",
+          "title": "Teste de Stress - Carga de Dados Massiva",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Deve manter a performance e layout com 50 itens na lista",
+              "fullTitle": "Teste de Stress - Carga de Dados Massiva Deve manter a performance e layout com 50 itens na lista",
+              "timedOut": null,
+              "duration": 1294,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// 1. Aguarda a carga massiva\ncy.wait('@getLargeData');\n// 2. Valida se os 50 cards de sugestão apareceram\n// Usamos o seletor da borda lateral emerald que está no seu .map\ncy.get('.border-l-emerald-500', {\n  timeout: 10000\n}).should('have.length', 50);\n// 3. Verifica se o scroll funciona\ncy.scrollTo('bottom');\n// 4. Garante que o último item está lá embaixo\ncy.contains('Produto Hiper-Otimizado 50').should('be.visible');\n// 5. O Header deve continuar firme no topo (mesmo com scroll, se for fixo)\n// ou pelo menos existir no DOM\ncy.get('div.bg-slate-900.rounded-3xl').should('exist');",
+              "err": {},
+              "uuid": "83c2f8ad-2099-454e-bb31-413f9d81fbdd",
+              "parentUUID": "4436c322-ed56-4a38-ac1c-9520844aea58",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "83c2f8ad-2099-454e-bb31-413f9d81fbdd"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 1294,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    },
+    {
+      "uuid": "562a7ed9-a372-4eb1-b644-6ad56bde951d",
+      "title": "",
+      "fullFile": "cypress\\e2e\\dashboard.cy.js",
+      "file": "cypress\\e2e\\dashboard.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "33f890b6-d0df-4170-abd4-5e55fe802787",
+          "title": "Fluxo Operacional - Factory ERP",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Deve validar os indicadores de lucro no Header do Dashboard",
+              "fullTitle": "Fluxo Operacional - Factory ERP Deve validar os indicadores de lucro no Header do Dashboard",
+              "timedOut": null,
+              "duration": 1247,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Mudamos o seletor para pegar a DIV com rounded-3xl\n// Isso ignora o <header> do topo do site e foca no Card de Lucro\ncy.get('div.bg-slate-900.rounded-3xl').first().within(() => {\n  // Usamos apenas 'Lucro' para evitar erros de quebra de linha do HTML\n  cy.contains(/Lucro/i).should('be.visible');\n  // Valida que existe um valor em Reais\n  cy.contains(/R\\$/).should('be.visible');\n  // Valida a margem\n  cy.contains(/Margem/i).should('be.visible');\n});",
+              "err": {},
+              "uuid": "ad1af678-69ce-443e-8842-cefe486bf148",
+              "parentUUID": "33f890b6-d0df-4170-abd4-5e55fe802787",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Deve interagir com o fluxo de produção",
+              "fullTitle": "Fluxo Operacional - Factory ERP Deve interagir com o fluxo de produção",
+              "timedOut": null,
+              "duration": 1262,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Busca os botões dentro do grid de Capacidade Técnica\n// Usamos o texto exato do seu código: 'Produzir Item' ou 'Ver Pendências'\ncy.get('button').contains(/Produzir|Pendências/i).first().click({\n  force: true\n});\n// Aguarda o modal do SweetAlert aparecer\ncy.get('.swal2-popup', {\n  timeout: 8000\n}).should('be.visible');\n// Lógica para preencher a quantidade apenas se o campo existir (Fluxo de Produção)\ncy.get('body').then($body => {\n  if ($body.find('#swal-input-qty').length > 0) {\n    cy.get('#swal-input-qty').clear().type('1');\n    // Clica no botão de confirmação que você estilizou\n    cy.contains('Confirmar Produção').click();\n  }\n});\n// Fecha o modal de sucesso ou aviso\ncy.contains(/Cancelar|Entendi|OK/i).click({\n  force: true\n});",
+              "err": {},
+              "uuid": "58d86269-38fa-4013-878c-f0de1f0d5529",
+              "parentUUID": "33f890b6-d0df-4170-abd4-5e55fe802787",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "ad1af678-69ce-443e-8842-cefe486bf148",
+            "58d86269-38fa-4013-878c-f0de1f0d5529"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 2509,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.3.2"
+    }
+  }
+}

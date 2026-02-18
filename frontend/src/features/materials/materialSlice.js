@@ -1,21 +1,29 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
-
+import api from '../../services/api'; 
 
 export const fetchMaterials = createAsyncThunk('materials/fetchMaterials', async () => {
-  const response = await axios.get('/api/materials');
+  
+  const response = await api.get('/materials'); 
   return response.data;
 });
 
 export const addMaterial = createAsyncThunk('materials/addMaterial', async (newMaterial) => {
-  const response = await axios.post('/api/materials', newMaterial);
+  const response = await api.post('/materials', newMaterial);
   return response.data;
 });
 
-export const deleteMaterial = createAsyncThunk('materials/deleteMaterial', async (id) => {
-  await axios.delete(`/api/materials/${id}`);
-  return id;
-});
+export const deleteMaterial = createAsyncThunk(
+  'materials/deleteMaterial', 
+  async (id, { rejectWithValue }) => {
+    try {
+      await api.delete(`/materials/${id}`);
+      return id;
+    } catch (err) {
+      const message = err.response?.data || "Error deleting material";
+      return rejectWithValue(message);
+    }
+  }
+);
 
 const materialSlice = createSlice({
   name: 'materials',

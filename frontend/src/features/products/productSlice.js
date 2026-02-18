@@ -1,22 +1,25 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
-
+import api from '../../services/api'; 
 
 export const fetchProducts = createAsyncThunk('products/fetchProducts', async () => {
-  const response = await axios.get('/api/products');
+  const response = await api.get('/products'); 
   return response.data;
 });
 
 export const addProduct = createAsyncThunk('products/addProduct', async (newProduct) => {
-  const response = await axios.post('/api/products', newProduct);
+  const response = await api.post('/products', newProduct);
   return response.data;
 });
 
-export const deleteProduct = createAsyncThunk('products/deleteProduct', async (id) => {
-  await axios.delete(`/api/products/${id}`);
-  return id;
+export const deleteProduct = createAsyncThunk('products/deleteProduct', async (id, { rejectWithValue }) => {
+  try {
+    await api.delete(`/products/${id}`);
+    return id;
+  } catch (err) {
+    const message = err.response?.data || "Error deleting product";
+    return rejectWithValue(message);
+  }
 });
-
 
 const productSlice = createSlice({
   name: 'products',
@@ -44,7 +47,6 @@ const productSlice = createSlice({
       });
   },
 });
-
 
 export const { setSearchTerm } = productSlice.actions;
 export default productSlice.reducer;
