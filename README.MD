@@ -13,7 +13,7 @@
 
 > **Nota do Desenvolvedor:** Este projeto transcende o conceito de um simples CRUD. Trata-se de uma solução completa de **Planejamento de Recursos Empresariais (ERP)**, com foco em arquitetura limpa, otimização de estoque e algoritmos de sugestão de produção.
 
-[Ver Demonstração](#) • [Reportar Bug](../../issues) • [Solicitar Feature](../../issues)
+[Ver Demonstração](https://app.lmtools.com.br/) • [Reportar Bug](https://wa.me/5588988824078?text=Ol%C3%A1%21%20Encontrei%20um%20bug%20no%20Factory%20ERP.%20O%20problema%20%C3%A9%20o%20seguinte%3A%20) • [Solicitar Feature](https://wa.me/5588988824078?text=Ol%C3%A1%21%20Tenho%20uma%20sugest%C3%A3o%20de%20nova%20funcionalidade%20para%20o%20Factory%20ERP.%20A%20minha%20ideia%20%C3%A9%3A%20)
 
 </div>
 
