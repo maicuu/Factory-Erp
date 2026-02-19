@@ -75,7 +75,7 @@ O projeto segue rigorosos padrões de qualidade. Utilize os comandos abaixo para
 
 ### 🖥️ Testes End-to-End (Cypress)
 Garante que o fluxo do usuário (Front + Back) funcione perfeitamente.
-```bash
+
 # Execução via Interface Gráfica
 cd frontend && npx cypress open
 
@@ -85,7 +85,7 @@ cd frontend && npx cypress run
 ⚙️ Testes Unitários e Isolados (Backend)
 Valida as regras de negócio e cálculos matemáticos isoladamente.
 
-Bash
+
 cd backend && ./mvnw test
 ⚡ Como Executar o Projeto
 📋 Pré-requisitos
@@ -98,13 +98,13 @@ Banco de Dados: MySQL 8.0 (Porta 3306)
 1️⃣ Inicialização do Backend
 O Quarkus gerencia a criação das tabelas e a carga inicial de dados automaticamente.
 
-Bash
+
 cd backend
 ./mvnw quarkus:dev
 2️⃣ Inicialização do Frontend
 O servidor do Vite já está configurado com proxy para o backend na porta 8080.
 
-Bash
+
 cd frontend
 npm install
 npm run dev
@@ -113,7 +113,7 @@ URL de acesso: http://localhost:5173
 🐳 Rodando com Docker (Recomendado)
 Para uma avaliação rápida e consistente em ambiente isolado, utilize o Docker Compose:
 
-Bash
+
 # Sobe a stack completa: MySQL + Backend + Frontend
 docker-compose up --build
 <div align="center">
